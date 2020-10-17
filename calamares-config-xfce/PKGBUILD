@@ -1,0 +1,23 @@
+# Maintainer: Chaitanya Rahalkar <chaitanya@rahalkar.xyz>
+pkgname=calamares-config-xfce
+_destname="/etc/calamares"
+_licensedir="/usr/share/frostlinux/licenses/"
+pkgver=20.10
+pkgrel=13
+pkgdesc="Calamares configuration for Frost Linux"
+arch=('any')
+url="https://github.com/frost-linux/${pkgname}"
+license=('GPL3')
+makedepends=('git')
+depends=()
+conflicts=()
+provides=("${pkgname}")
+options=(!strip !emptydirs)
+source=(${pkgname}::"git+https://github.com/frost-linux/${pkgname}.git")
+sha256sums=('SKIP')
+package() {
+	mkdir -p "${pkgdir}${_licensedir}${pkgname}"
+	mv "${srcdir}/${pkgname}/"LICENSE "${pkgdir}${_licensedir}${pkgname}/LICENSE"
+	mkdir -p "${pkgdir}${_destname}"
+	cp -r "${srcdir}/${pkgname}/calamares/"* "${pkgdir}${_destname}"
+}
