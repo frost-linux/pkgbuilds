@@ -1,0 +1,19 @@
+# Maintainer: Chaitanya Rahalkar <chaitanya@rahalkar.xyz>
+pkgname=frost-keyring
+pkgver=20201018
+pkgrel=1
+pkgdesc='Frost Linux PGP keyring'
+arch=('any')
+url='https://github.com/frost-linux/frost-keyring'
+license=('GPL-3')
+install="${pkgname}.install"
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/frost-linux/frost-keyring/releases/download/${pkgver}/frost-keyring-${pkgver}.tar.gz"
+"${pkgname}-${pkgver}.tar.gz.sig::https://github.com/frost-linux/frost-keyring/releases/download/${pkgver}/frost-keyring-${pkgver}.tar.gz.sig")
+sha256sums=('B003C7804CC9AF2B6DDDD658A034B6C1B56ABED8F385718FB423F7CA37657AD9'
+            'SKIP')
+validpgpkeys=('CF835C8E5B492547C8D833C3A9C2670A76069ED1') # chaitanya
+
+package() {
+    cd "${pkgname}-${pkgver}"
+    make PREFIX=/usr DESTDIR=${pkgdir} install
+}

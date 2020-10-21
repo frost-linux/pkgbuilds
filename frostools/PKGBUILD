@@ -1,0 +1,57 @@
+# Maintainer: Chaitanya Rahalkar <chaitanya@rahalkar.xyz>
+
+pkgbase=frostools
+pkgname=('frostools-base' 'frostools-pkg' 'frostools-iso')
+pkgver=0.20.2
+pkgrel=1
+arch=('any')
+pkgdesc='Development tools for Frost Linux'
+license=('GPL')
+groups=('frostools')
+url='https://github.com/frost-linux/frostools'
+source=("${pkgbase}-${pkgver}.zip::${url}/releases/download/${pkgver}/frostools-${pkgver}.zip")
+sha256sums=('6C021A0EAA9B592151DBF2198ABAF52916EB1FB0CACD32870467E2E66C1B7FDD')
+
+prepare() {
+    cd ${pkgbase}
+    sed -e "s/^VERSION=.*/VERSION=${pkgver}/" -i Makefile
+}
+
+build() {
+    cd ${pkgbase}
+    make PREFIX=/usr
+}
+
+package_frostools-base() {
+    pkgdesc='Development tools for Frost Linux (base tools)'
+    depends=('openssh' 'rsync' 'haveged' 'os-prober' 'gnupg' 'pacman')
+    optdepends=('frostools-pkg: Frost Linux package tools'
+                'frostools-iso: Frost Linux iso tools')
+    backup=('etc/frostools/frostools-base.conf')
+    conflicts=('arch-install-scripts')
+    # install=frostools.install
+
+    cd ${pkgbase}
+    make PREFIX=/usr DESTDIR=${pkgdir} install_base
+}
+
+package_frostools-pkg() {
+    pkgdesc='Development tools for Frost Linux (packaging tools)'
+    depends=('frostools-base' 'namcap' 'git-subrepo' 'jq')
+    conflicts=('devtools')
+    backup=('etc/frostools/frostools-pkg.conf')
+
+    cd ${pkgbase}
+    make PREFIX=/usr DESTDIR=${pkgdir} install_pkg
+}
+
+package_frostools-iso() {
+    pkgdesc='Development tools for Frost Linux (ISO tools)'
+    depends=('frostools-base' 'iso-profiles' 'grub' 'mkinitcpio'
+            'dosfstools' 'squashfs-tools' 'libisoburn')
+    conflicts=('archiso')
+    backup=('etc/frostools/frostools-iso.conf')
+
+    cd ${pkgbase}
+    make PREFIX=/usr DESTDIR=${pkgdir} install_iso
+}
