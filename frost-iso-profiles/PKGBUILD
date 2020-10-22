@@ -1,0 +1,23 @@
+# Maintainer: Chaitanya Rahalkar <chaitanya@rahalkar.xyz>
+
+pkgname=frost-iso-profiles
+pkgver=0.50
+pkgrel=1
+pkgdesc='Frost Linux ISO profiles'
+arch=('any')
+license=('GPL')
+url='https://github.com/frost-linux/frost-iso-profiles'
+makedepends=('git')
+source=("git+$url.git)
+sha256sums=('SKIP')
+
+pkgver() {
+    cd ${pkgname}
+    git describe --tags | sed 's/-/+/g'
+}
+
+package() {
+    cd ${pkgname}
+    install -d ${pkgdir}/usr/share/frostools/iso-profiles
+    cp -a {base,common,plasma,xfce} ${pkgdir}/usr/share/frostools/iso-profiles
+}
