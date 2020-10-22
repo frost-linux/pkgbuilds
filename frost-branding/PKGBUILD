@@ -1,0 +1,52 @@
+# Maintainer: nous <nous@frostlinux.org>
+
+pkgbase=frost-branding
+pkgname=($pkgbase-base $pkgbase-system $pkgbase-internet $pkgbase-office)
+pkgver=$(date +"%Y%m%d")
+pkgrel=1
+pkgdesc="Frost Linux branding collection"
+arch=('any')
+groups=($pkgbase 'frost-branding')
+url="https://github.com/frost-linux/$pkgbase"
+license=('GPL3')
+source=("git+${url}.git")
+sha256sums=('SKIP')
+
+prepare() {
+    cd $pkgbase
+    git checkout refactor
+}
+ 
+package_frost-branding-base() {
+pkgdesc="Frost Linux default settings for base and ISOs"
+    cd "$pkgbase/$pkgname"
+    install -dm755 $pkgdir/etc
+    cp -r etc/* $pkgdir/etc
+}
+
+package_frost-branding-system() {
+pkgdesc="Frost Linux default settings for base and minimal ISOs"
+    depends=('graphicsmagick' 'fortune-mod')
+    cd "$pkgbase/$pkgname"
+    install -dm755 $pkgdir/etc
+    install -dm755 $pkgdir/usr/share
+    cp -r etc/* $pkgdir/etc
+    cp -r usr/share/* $pkgdir/usr/share
+}
+
+package_frost-branding-office() {
+pkgdesc="Frost Linux LibreOffice presets for community ISOs"
+optdepends=('libreoffice-still' 'libreoffice-fresh')
+    cd "$pkgbase/$pkgname"
+    install -dm755 $pkgdir/etc
+    cp -r etc/* $pkgdir/etc
+}
+
+package_frost-branding-internet() {
+pkgdesc="frost browser and IRC clients presets for community ISOs"
+    cd "$pkgbase/$pkgname"
+    install -dm755 $pkgdir/etc
+    install -dm755 $pkgdir/usr/lib
+    cp -r etc/* $pkgdir/etc
+    cp -r usr/lib/* $pkgdir/usr/lib
+}
