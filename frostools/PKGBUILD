@@ -2,23 +2,23 @@
 
 pkgbase=frostools
 pkgname=('frostools-base' 'frostools-pkg' 'frostools-iso')
-pkgver=0.20.2
+pkgver=0.20.4
 pkgrel=1
 arch=('any')
 pkgdesc='Development tools for Frost Linux'
 license=('GPL')
 groups=('frostools')
 url='https://github.com/frost-linux/frostools'
-source=("${pkgbase}-${pkgver}.zip::${url}/releases/download/${pkgver}/frostools-${pkgver}.zip")
-sha256sums=('6C021A0EAA9B592151DBF2198ABAF52916EB1FB0CACD32870467E2E66C1B7FDD')
+source=("${pkgbase}-${pkgver}.zip::${url}/archive/${pkgver}.zip")
+sha256sums=('31FF2687A51CDEADF4C0ED92628C9B70F54A9AF358B15903C3DB99E9677B628E')
 
 prepare() {
-    cd ${pkgbase}
+    cd ${pkgbase}-${pkgver}
     sed -e "s/^VERSION=.*/VERSION=${pkgver}/" -i Makefile
 }
 
 build() {
-    cd ${pkgbase}
+    cd ${pkgbase}-${pkgver}
     make PREFIX=/usr
 }
 
@@ -31,7 +31,7 @@ package_frostools-base() {
     conflicts=('arch-install-scripts')
     # install=frostools.install
 
-    cd ${pkgbase}
+    cd ${pkgbase}-${pkgver}
     make PREFIX=/usr DESTDIR=${pkgdir} install_base
 }
 
@@ -41,7 +41,7 @@ package_frostools-pkg() {
     conflicts=('devtools')
     backup=('etc/frostools/frostools-pkg.conf')
 
-    cd ${pkgbase}
+    cd ${pkgbase}-${pkgver}
     make PREFIX=/usr DESTDIR=${pkgdir} install_pkg
 }
 
@@ -52,6 +52,6 @@ package_frostools-iso() {
     conflicts=('archiso')
     backup=('etc/frostools/frostools-iso.conf')
 
-    cd ${pkgbase}
+    cd ${pkgbase}-${pkgver}
     make PREFIX=/usr DESTDIR=${pkgdir} install_iso
 }

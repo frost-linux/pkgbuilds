@@ -1,0 +1,26 @@
+# Maintainer: Chaitanya Rahalkar <chaitanya@rahalkar.xyz>
+
+
+pkgbase=frost-grub-branding
+pkgname=('frost-grub-theme' 'frost-grub-live')
+pkgver=0.7
+pkgrel=4
+pkgdesc='Frost Linux GRUB theme'
+arch=('any')
+url="https://github.com/frost-linux/frost-grub-branding"
+license=('GPL')
+depends=('grub')
+makedepends=('git')
+groups=('frost-branding')
+source=("git+$url.git")
+sha256sums=('SKIP')
+
+package_frost-grub-live() {
+    cd ${pkgbase}
+    make PREFIX=/usr DESTDIR=${pkgdir} install_live_cfg
+}
+
+package_frost-grub-theme() {
+    cd ${pkgbase}
+    make PREFIX=/usr DESTDIR=${pkgdir} install_theme
+}
