@@ -8,13 +8,8 @@ arch=('any')
 license=('GPL')
 url='https://github.com/frost-linux/frost-iso-profiles'
 makedepends=('git')
-source=("git+$url.git)
+source=("git+$url.git")
 sha256sums=('SKIP')
-
-pkgver() {
-    cd ${pkgname}
-    git describe --tags | sed 's/-/+/g'
-}
 
 package() {
     cd ${pkgname}

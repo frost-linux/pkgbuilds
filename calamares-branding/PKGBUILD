@@ -10,8 +10,7 @@ url="https://github.com/frost-linux/calamares-branding"
 license=('MIT')
 depends=()
 makedepends=('git')
-_commit=3a18f7bdcad89355886cd288eb57aeda68686729
-source=("git+https://github.com/frost-linux/calamares-branding#commit=${_commit}")
+source=("git+https://github.com/frost-linux/calamares-branding")
 sha256sums=('SKIP')
 
 package() {
