@@ -1,0 +1,46 @@
+# Maintainer: Frost Linux Team
+
+pkgname=frost-base
+pkgver=2
+pkgrel=2.3
+pkgdesc='Minimal package set to define a basic Frost Linux installation'
+url='https://frostlinux.xyz'
+arch=('any')
+license=('GPL')
+depends=(
+  # very very base
+  'frost-fs' 'gcc-libs' 'glibc' 'bash'
+
+  # POSIX tools
+  'coreutils' 'file' 'findutils' 'gawk' 'grep' 'procps-ng' 'sed' 'tar'
+
+  # standard linux toolset
+  'gettext' 'pciutils' 'psmisc' 'shadow' 'util-linux' 'bzip2' 'gzip' 'xz'
+
+  # distro defined requirements
+  'licenses' 'pacman' 'init-elogind' 'esysusers' 'etmpfiles'
+
+  # networking, ping, etc
+  'iputils' 'iproute2'
+)
+optdepends=('linux: bare metal support')
+provides=('artix-sysvcompat')
+conflicts=('artix-sysvcompat')
+replaces=('artix-sysvcompat')
+source=('initswitch-hook'
+        '55-initswitch.hook'
+        '50-sysvcompat.hook')
+
+sha256sums=('3acd842566df7ac77bbc9801c8580d8d7e398a03f5aa4f0472d74a7de6f60423'
+            '97cac34e626d54de123662387360e60be4c4a654581bce1be81ef1cc2cc8eea0'
+            '447644e5b1737808ba38f2c274b0315d2d01ffa8a2bd86ab911d5a636d44b8ee')
+
+package() {
+	# pacman hooks
+    install -Dm755 ${srcdir}/initswitch-hook "${pkgdir}"/usr/share/libalpm/scripts/initswitch-hook
+    install -Dm644 -t "${pkgdir}"/usr/share/libalpm/hooks ${srcdir}/*.hook
+
+    # provide default symlink for PM file tracking
+    install -d "${pkgdir}"/usr/bin
+    ln -sf openrc-init "${pkgdir}"/usr/bin/init
+}
