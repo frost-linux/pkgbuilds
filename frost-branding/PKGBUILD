@@ -13,8 +13,7 @@ source=("git+${url}.git")
 sha256sums=('SKIP')
 
 prepare() {
-    cd $pkgbase
-    git checkout refactor
+    
 }
  
 package_frost-branding-base() {
