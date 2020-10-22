@@ -1,0 +1,48 @@
+# Maintainer: Chaitanya Rahalkar <chaitanya@rahalkar.xyz>
+
+pkgbase=frost-live-services
+pkgname=('frost-live-base'
+        'frost-live-openrc'
+        'frost-live-runit'
+        'frost-live-s6')
+pkgver=0.9
+pkgrel=1
+pkgdesc='Frost Linux live session'
+arch=('any')
+url="https://github.com/frost-linux/frost-live-services"
+license=('GPL')
+makedepends=('git')
+source=("git+$url.git")
+sha256sums=('SKIP')
+
+package_frost-live-base() {
+    pkgdesc='Frost Linux live base scripts'
+    depends=("frostools-base>=${pkgver}")
+
+    cd ${pkgbase} #-${pkgver}
+    make DESTDIR=${pkgdir} install_base install_xdg
+}
+
+package_frost-live-openrc() {
+    pkgdesc='Frost Linux live openrc init scripts'
+    depends=('openrc' 'frost-live-base')
+
+    cd ${pkgbase} #-${pkgver}
+    make DESTDIR=${pkgdir} install_rc
+}
+
+package_frost-live-runit() {
+    pkgdesc='Frost Linux live runit init scripts'
+    depends=('runit' 'frost-live-base')
+
+    cd ${pkgbase} #-${pkgver}
+    make DESTDIR=${pkgdir} install_runit
+}
+
+package_frost-live-s6() {
+    pkgdesc='Frost Linux live s6 init scripts'
+    depends=('s6' 'frost-live-base')
+
+    cd ${pkgbase} #-${pkgver}
+    make DESTDIR=${pkgdir} install_s6
+}
