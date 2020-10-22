@@ -11,10 +11,6 @@ url="https://github.com/frost-linux/$pkgbase"
 license=('GPL3')
 source=("git+${url}.git")
 sha256sums=('SKIP')
-
-prepare() {
-    
-}
  
 package_frost-branding-base() {
 pkgdesc="Frost Linux default settings for base and ISOs"
