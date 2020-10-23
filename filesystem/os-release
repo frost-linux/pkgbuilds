@@ -1,0 +1,10 @@
+NAME="Frost Linux"
+PRETTY_NAME="Frost Linux"
+ID=frost
+BUILD_ID=rolling
+ANSI_COLOR="0;36"
+HOME_URL="https://frostlinux.xyz/"
+DOCUMENTATION_URL="https://frostlinux.xyz/"
+SUPPORT_URL="https://frostlinux.xyz"
+BUG_REPORT_URL="https://frostlinux.xyz"
+LOGO=frostlinux
