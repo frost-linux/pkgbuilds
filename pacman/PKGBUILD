@@ -29,10 +29,9 @@ source=(https://sources.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz{,.sig
 
 sha256sums=('bb201a9f2fb53c28d011f661d50028efce6eef2c1d2a36728bdd0130189349a0'
             'SKIP'
-            '532efac7707a33f9d0890b9a50e85e0812f1c84d3f3225b2afad9c6d6b8c7a5d'
+            '06f54d157c4da55949f28085f8a2207e98234beb0ca0e13ab750038308801e38'
             '9c769f13c09a6f24c393a9762474eded2f269d8966e7764d9160d62232a7919b'
             'a78f366eee71610be1a2da1e533128af3ef188ff9ab577f3eab82ba69ad02466')
-
 prepare() {
   cd "$pkgname-$pkgver"
   patch -Np1 < ../extracolors.patch
