@@ -1,0 +1,12 @@
+post_install() {
+  echo "Frost Linux release" >> /etc/frost-release
+}
+
+post_upgrade() {
+  sed -e "/Frost Linux release/d" -i /etc/frost-release
+  echo "Frost Linux release" >> /etc/frost-release
+}
+
+pre_remove() {
+  sed -e "/Frost Linux release/d" -i /etc/frost-release
+}
