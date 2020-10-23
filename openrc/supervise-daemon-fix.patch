@@ -1,0 +1,28 @@
+From 6deda13754f1b60245945e953cce8d97e40e86fc Mon Sep 17 00:00:00 2001
+From: Wolf <wolf@wolfsden.cz>
+Date: Fri, 4 Oct 2019 15:24:32 +0200
+Subject: [PATCH] supervise-daemon: Fix segfault when executable does not exist
+
+When executable is provided just by name (and therefore searched in a
+path), exec_file is reset to NULL every time. exists() handles it being
+NULL just fine, but dereferencing it in eerror does not work.
+
+Fixes #326
+Fixes #327
+---
+ src/rc/supervise-daemon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/rc/supervise-daemon.c b/src/rc/supervise-daemon.c
+index b754a42b..be424750 100644
+--- a/src/rc/supervise-daemon.c
++++ b/src/rc/supervise-daemon.c
+@@ -983,7 +983,7 @@ int main(int argc, char **argv)
+ 			}
+ 			if (!exists(exec_file)) {
+ 				eerror("%s: %s does not exist", applet,
+-				    *exec_file ? exec_file : exec);
++				    exec_file ? exec_file : exec);
+ 				free(exec_file);
+ 				exit(EXIT_FAILURE);
+ 			}

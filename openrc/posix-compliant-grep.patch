@@ -1,0 +1,26 @@
+From a7e7fd2b37a7666f26c2d4de9386b2d04f583b41 Mon Sep 17 00:00:00 2001
+From: Ethan Sommer <e5ten.arch@gmail.com>
+Date: Thu, 2 Jan 2020 09:28:25 -0500
+Subject: [PATCH] make grep usage POSIX compliant
+
+use grep -E instead of egrep
+check for space or end of line instead of GNU-specific word boundary
+
+This fixes #345
+---
+ sh/init-early.sh.Linux.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sh/init-early.sh.Linux.in b/sh/init-early.sh.Linux.in
+index b7082a02..f304e924 100644
+--- a/sh/init-early.sh.Linux.in
++++ b/sh/init-early.sh.Linux.in
+@@ -20,7 +20,7 @@ service_present()
+ 	# succeed if $RC_SYS empty, can't check further, assume script will run
+ 	[ -z "$RC_SYS" ] && return 0
+ 	# fail if file contains "-$RC_SYS", because then it won't run
+-	egrep -qi "^[[:space:]]*keyword[[:space:]].*-$RC_SYS\>" "$p" && return 1
++	grep -Eqi "^[[:space:]]*keyword[[:space:]].*-$RC_SYS([[:space:]]|$)" "$p" && return 1
+ 	# succeed otherwise
+ 	return 0
+ }

@@ -1,0 +1,30 @@
+From 87cfad3d6cd619c6090e8209092448ae68279b0c Mon Sep 17 00:00:00 2001
+From: E5ten <ethancsommer@gmail.com>
+Date: Tue, 27 Aug 2019 11:48:21 -0400
+Subject: [PATCH] cgroup2_set_limits: verify that the cgroup2 path is a mount
+ point
+
+prior to cgroups getting mounted, /sys/fs/cgroup will still exist,
+but attempts to make directories in it will fail, change cgroup2_set_limits() to
+verify that cgroups are mounted instead of just checking that /sys/fs/cgroup
+exists.
+
+This fixes #307.
+This fixes #321.
+---
+ sh/rc-cgroup.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sh/rc-cgroup.sh b/sh/rc-cgroup.sh
+index 5d24344d..77d56dd1 100644
+--- a/sh/rc-cgroup.sh
++++ b/sh/rc-cgroup.sh
+@@ -181,7 +181,7 @@ cgroup2_set_limits()
+ {
+ 	local cgroup_path
+ 	cgroup_path="$(cgroup2_find_path)"
+-	[ -d "${cgroup_path}" ] || return 0
++	mountinfo -q "${cgroup_path}"|| return 0
+ 	rc_cgroup_path="${cgroup_path}/${RC_SVCNAME}"
+ 	[ ! -d "${rc_cgroup_path}" ] && mkdir "${rc_cgroup_path}"
+ 	[ -f "${rc_cgroup_path}"/cgroup.procs ] &&

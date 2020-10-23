@@ -1,0 +1,22 @@
+From fd852865e06a74ecf8b77ff534fa8053e020160f Mon Sep 17 00:00:00 2001
+From: William Hubbs <william.hubbs@sony.com>
+Date: Thu, 5 Dec 2019 12:10:46 -0600
+Subject: [PATCH] openrc-shutdown.c: typo fix
+
+---
+ src/rc/openrc-shutdown.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/rc/openrc-shutdown.c b/src/rc/openrc-shutdown.c
+index ec240b2a..c8c8d863 100644
+--- a/src/rc/openrc-shutdown.c
++++ b/src/rc/openrc-shutdown.c
+@@ -72,7 +72,7 @@ const char *usagestring = "" \
+ 						   "Usage: openrc-shutdown -c | --cancel\n" \
+ 						   "   or: openrc-shutdown -R | --reexec\n" \
+ 						   "   or: openrc-shutdown -w | --write-only\n" \
+-						   "   or: openmrc-shutdown -H | --halt time\n" \
++						   "   or: openrc-shutdown -H | --halt time\n" \
+ 						   "   or: openrc-shutdown -K | --kexec time\n" \
+ 						   "   or: openrc-shutdown -p | --poweroff time\n" \
+ 						   "   or: openrc-shutdown -r | --reboot time\n" \

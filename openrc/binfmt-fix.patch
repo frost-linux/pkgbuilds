@@ -1,0 +1,24 @@
+From eb610859519292c6164c4ba601d22e642c306beb Mon Sep 17 00:00:00 2001
+From: artoo <artoo@artixlinux.org>
+Date: Sat, 5 Oct 2019 16:32:21 +0200
+Subject: [PATCH] binfmt: ensure a file is ungegistered before registering
+
+This fixes #328
+---
+ sh/binfmt.sh.in | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/sh/binfmt.sh.in b/sh/binfmt.sh.in
+index ca4a8833..11a57211 100644
+--- a/sh/binfmt.sh.in
++++ b/sh/binfmt.sh.in
+@@ -29,6 +29,9 @@ apply_file() {
+ 			\;*) continue ;;
+ 		esac
+ 
++		local reg=${line#*:}
++		[ -e /proc/sys/fs/binfmt_misc/${reg%%:*} ] && echo -1 > /proc/sys/fs/binfmt_misc/${reg%%:*}
++
+ 		echo "${line}" > /proc/sys/fs/binfmt_misc/register
+ 		rc=$?
+ 		if [ $rc -ne 0 ]; then
