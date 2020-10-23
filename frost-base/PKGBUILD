@@ -9,7 +9,7 @@ arch=('any')
 license=('GPL')
 depends=(
   # very very base
-  'frost-fs' 'gcc-libs' 'glibc' 'bash'
+  'filesystem' 'gcc-libs' 'glibc' 'bash'
 
   # POSIX tools
   'coreutils' 'file' 'findutils' 'gawk' 'grep' 'procps-ng' 'sed' 'tar'
