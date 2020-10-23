@@ -17,7 +17,7 @@ sha256sums=('SKIP')
 
 package_frost-live-base() {
     pkgdesc='Frost Linux live base scripts'
-    depends=("frostools-base>=${pkgver}")
+    depends=("frostools-base")
 
     cd ${pkgbase} #-${pkgver}
     make DESTDIR=${pkgdir} install_base install_xdg
