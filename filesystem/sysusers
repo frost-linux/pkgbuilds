@@ -14,7 +14,7 @@ g floppy 94 - -
 g scanner 96 - -
 g power 98 - -
 
-# default artix users
+# default frost users
 u bin 1 - -
 u daemon 2 - -
 u mail 8 - /var/spool/mail
